@@ -147,7 +147,7 @@ def getSquare(row, col):
             return 8
     
 
-@app.route('/api/getPuzzle', methods=["POST"])
+@app.route('/api/solvePuzzle', methods=["POST"])
 def solveSudoku():
     '''
     This is an API that returns a solved sudoku puzzle or an error message if the puzzle can't be solved
@@ -165,6 +165,10 @@ def solveSudoku():
             return "Puzzle not solvable", 400
     else:
         return "Invalid Puzzle", 404
+
+@app.route('/')
+def home():
+    return "<h1> Welcome to online sudoku solver </h1>"
 
 if (__name__ == "__main__"):
     app.secret_key = b"secretkey"
