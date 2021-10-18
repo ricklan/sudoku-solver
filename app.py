@@ -164,7 +164,7 @@ def solveSudoku():
         else:
             return "Puzzle not solvable", 400
     else:
-        return "Invalid Puzzle", 404
+        return "Invalid Puzzle", 400
 
 @app.route('/')
 def home():
