@@ -1,23 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+function SudokuBoard() {
+  let board = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
+  return (
+    <>
+      <form>
+        <div id="sudoku-board">
+          <label for="board">Enter values for the sudoku board</label>
+          {board.map((row, x) => {
+            return (
+              <>
+                <br />
+                {row.map((cell, y) => {
+                  return (
+                    <input
+                      type="text"
+                      maxlength="1"
+                      pattern="[0-9]"
+                      id={`${x}-${y}`}
+                    />
+                  );
+                })}
+              </>
+            );
+          })}
+        </div>
+        <div id="board-menu">
+          <button>Submit</button>
+          <button>Clear</button>
+        </div>
+      </form>
+    </>
+  );
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SudokuBoard />
     </div>
   );
 }
