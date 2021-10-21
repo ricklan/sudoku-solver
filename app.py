@@ -4,11 +4,10 @@ import json
 
 
 app = Flask(__name__)
-CORS(app)
-# CORS(app, resources=r'/api/*')
+# CORS(app)
+CORS(app, resources=r'/api/*')
 # CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.route("/")
 def solve_sudoku(array):
     '''
     This function uses backtracking to solve a sudoku puzzle.
@@ -152,7 +151,7 @@ def getSquare(row, col):
             return 8
     
 
-@app.route('/api/solvePuzzle', methods=["POST"])
+@app.route("/api/solvePuzzle", methods=['POST'])
 def solveSudoku():
     '''
     This is an API that returns a solved sudoku puzzle or an error message if the puzzle can't be solved
