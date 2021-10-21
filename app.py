@@ -151,7 +151,7 @@ def getSquare(row, col):
             return 8
     
 
-@api_v1.route("/api/solvePuzzle", methods=['POST'])
+@app.route("/api/solvePuzzle", methods=['POST'])
 def solveSudoku():
     '''
     This is an API that returns a solved sudoku puzzle or an error message if the puzzle can't be solved
