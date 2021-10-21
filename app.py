@@ -1,9 +1,14 @@
 from flask import Flask, request
+from flask_cors import CORS
 import json
 
 
 app = Flask(__name__)
+# CORS(app)
+CORS(app, resources=r'/api/*')
+# CORS(app, resources={r"/*": {"origins": "*"}})
 
+@app.route("/")
 def solve_sudoku(array):
     '''
     This function uses backtracking to solve a sudoku puzzle.
