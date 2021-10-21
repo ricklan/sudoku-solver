@@ -1,7 +1,7 @@
 // import axios from "axios";
-import axios from "axios";
+// import axios from "axios";
 
-axios.defaults.baseURL = "https://online-sudoku-solver.herokuapp.com";
+// axios.defaults.baseURL = "https://online-sudoku-solver.herokuapp.com";
 
 export function SudokuBoard() {
   let board = [
@@ -20,11 +20,15 @@ export function SudokuBoard() {
     e.preventDefault();
     const axios = require("axios");
     axios
-      .post("api/solvePuzzle", board, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .post(
+        "https://online-sudoku-solver.herokuapp.com/api/solvePuzzle",
+        board,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then(function (response) {
         console.log(response);
       })
