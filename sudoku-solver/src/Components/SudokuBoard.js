@@ -1,3 +1,8 @@
+// import axios from "axios";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://online-sudoku-solver.herokuapp.com";
+
 export function SudokuBoard() {
   let board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -10,10 +15,22 @@ export function SudokuBoard() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
-
+  //https://online-sudoku-solver.herokuapp.com/api/solvePuzzle
   const processBoard = (e) => {
     e.preventDefault();
-    console.log("processing board");
+    const axios = require("axios");
+    axios
+      .post("api/solvePuzzle", board, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const updateCell = (e) => {
@@ -22,8 +39,6 @@ export function SudokuBoard() {
         parseInt(e.target.id.substring(2, 3))
       ] = parseInt(e.key);
       e.target.value = e.key;
-      console.log(`cell ${e.target.id} input value ${e.key}`);
-      console.log(board);
     }
   };
 
