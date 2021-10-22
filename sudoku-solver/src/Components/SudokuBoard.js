@@ -46,7 +46,7 @@ export function SudokuBoard() {
   //   }
   // };
 
-  function findSelected() {
+  const findSelected = () => {
     for (let x = 0; x < 9; x++) {
       for (let y = 0; y < 9; y++) {
         if (board[x][y].selected) {
@@ -55,7 +55,7 @@ export function SudokuBoard() {
       }
     }
     return null;
-  }
+  };
 
   const highlightCell = (cell) => {
     let curSelCell = findSelected();
@@ -71,6 +71,16 @@ export function SudokuBoard() {
     board[x][y].toggleHighlight();
   };
 
+  const processKeyDown = (e) => {
+    let x = parseInt(e.target.id.substring(1, 2));
+    let y = parseInt(e.target.id.substring(3, 4));
+    if (e.key >= "1" && e.key <= "9") {
+      board[x][y].value = e.key;
+      console.log(board[x][y]);
+      e.target.innerHTML = e.key;
+    }
+  };
+
   return (
     <>
       <h1>Enter values for the sudoku board</h1>
@@ -83,6 +93,8 @@ export function SudokuBoard() {
                 id={`c${x}-${y}`}
                 key={`${x}-${y}`}
                 onClick={(e) => highlightCell(e.target)}
+                onKeyDown={(e) => processKeyDown(e)}
+                tabIndex="0"
               ></li>
             );
           });
