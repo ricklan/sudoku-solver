@@ -44,19 +44,27 @@ export function SudokuBoard() {
     return null;
   };
 
-  const highlightCell = (cell) => {
+  let selectCell = (cellTag) => {
     let curSelCell = findSelected();
     if (curSelCell) {
-      curSelCell.toggleHighlight();
-      document
-        .querySelector(`#c${curSelCell.x}-${curSelCell.y}`)
-        .classList.remove("cell-highlight");
+      removeHighlight(curSelCell, "cell-highlight");
     }
-    cell.classList.add("cell-highlight");
-    cell.focus();
-    let x = cell.id.substring(1, 2);
-    let y = cell.id.substring(3, 4);
-    board[x][y].toggleHighlight();
+    highlightCell(cellTag, "cell-highlight");
+    cellTag.focus();
+  };
+
+  const highlightCell = (cellTag, classToAdd) => {
+    cellTag.classList.add(classToAdd);
+    let x = cellTag.id.substring(1, 2);
+    let y = cellTag.id.substring(3, 4);
+    board[x][y].toggleSelected();
+  };
+
+  const removeHighlight = (cell, classToRemove) => {
+    cell.toggleSelected();
+    document
+      .querySelector(`#c${cell.x}-${cell.y}`)
+      .classList.remove(classToRemove);
   };
 
   const processKeyDown = (e) => {
@@ -64,7 +72,7 @@ export function SudokuBoard() {
     let y = parseInt(e.target.id.substring(3, 4));
     let curSelCell = findSelected();
     if (e.key >= "1" && e.key <= "9") {
-      highlightCell(e.target);
+      selectCell(e.target);
       board[x][y].value = e.key;
       console.log(board[x][y]);
       e.target.innerHTML = e.key;
@@ -102,9 +110,7 @@ export function SudokuBoard() {
       newHighlightX = curSelCell.x;
       newHighlightY = move(e.key, curSelCell.y);
     }
-    highlightCell(
-      document.querySelector(`#c${newHighlightX}-${newHighlightY}`)
-    );
+    selectCell(document.querySelector(`#c${newHighlightX}-${newHighlightY}`));
   };
 
   return (
@@ -118,7 +124,7 @@ export function SudokuBoard() {
                 className="cell"
                 id={`c${x}-${y}`}
                 key={`${x}-${y}`}
-                onClick={(e) => highlightCell(e.target)}
+                onClick={(e) => selectCell(e.target)}
                 onKeyDown={(e) => processKeyDown(e)}
                 tabIndex="0"
               ></li>

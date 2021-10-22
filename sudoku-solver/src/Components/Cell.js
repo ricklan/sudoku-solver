@@ -5,7 +5,7 @@ class Cell {
     this.x = x;
     this.y = y;
   }
-  toggleHighlight() {
+  toggleSelected() {
     this.selected = !this.selected;
   }
 }

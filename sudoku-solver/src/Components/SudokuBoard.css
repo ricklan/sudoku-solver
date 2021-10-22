@@ -8,6 +8,10 @@
   background-color: rgb(118, 118, 255);
 }
 
+.cell-highlight-error {
+  background-color: rgb(255, 166, 166);
+}
+
 #sudoku-board {
   list-style-type: none;
   display: grid;
