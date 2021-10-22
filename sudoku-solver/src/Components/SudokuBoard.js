@@ -1,20 +1,32 @@
 // import axios from "axios";
-// import axios from "axios";
 
 // axios.defaults.baseURL = "https://online-sudoku-solver.herokuapp.com";
 
 export function SudokuBoard() {
+  // let board = [
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  // ];
+
   let board = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
   ];
+
   //https://online-sudoku-solver.herokuapp.com/api/solvePuzzle
   const processBoard = (e) => {
     e.preventDefault();
@@ -38,11 +50,13 @@ export function SudokuBoard() {
   };
 
   const updateCell = (e) => {
+    let x = parseInt(e.target.id.substring(0, 1));
+    let y = parseInt(e.target.id.substring(2, 3));
     if (e.key >= "1" && e.key <= "9") {
-      board[parseInt(e.target.id.substring(0, 1))][
-        parseInt(e.target.id.substring(2, 3))
-      ] = parseInt(e.key);
+      board[x][y] = e.key;
       e.target.value = e.key;
+    } else if (board[x][y] === "") {
+      e.target.value = " ";
     }
   };
 
@@ -60,7 +74,7 @@ export function SudokuBoard() {
                     <input
                       type="text"
                       maxLength="1"
-                      pattern="[1-9]"
+                      pattern="[1-9] | ^$"
                       id={`${x}-${y}`}
                       key={`${x}-${y}`}
                       defaultValue=""
