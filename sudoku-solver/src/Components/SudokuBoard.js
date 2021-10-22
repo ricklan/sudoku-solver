@@ -1,31 +1,17 @@
 // import axios from "axios";
+import "./SudokuBoard.css";
+import Cell from "./Cell";
 
 // axios.defaults.baseURL = "https://online-sudoku-solver.herokuapp.com";
 
 export function SudokuBoard() {
-  // let board = [
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // ];
+  let board = [...Array(9)].map((i, x) => {
+    return [...Array(9)].map((j, y) => {
+      return new Cell("", false, x, y);
+    });
+  });
 
-  let board = [
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", ""],
-  ];
+  console.log(board);
 
   //https://online-sudoku-solver.herokuapp.com/api/solvePuzzle
   const processBoard = (e) => {
@@ -49,48 +35,64 @@ export function SudokuBoard() {
       });
   };
 
-  const updateCell = (e) => {
-    let x = parseInt(e.target.id.substring(0, 1));
-    let y = parseInt(e.target.id.substring(2, 3));
-    if (e.key >= "1" && e.key <= "9") {
-      board[x][y] = e.key;
-      e.target.value = e.key;
-    } else if (board[x][y] === "") {
-      e.target.value = " ";
+  // const updateCell = (e) => {
+  //   let x = parseInt(e.target.id.substring(0, 1));
+  //   let y = parseInt(e.target.id.substring(2, 3));
+  //   if (e.key >= "1" && e.key <= "9") {
+  //     board[x][y] = e.key;
+  //     e.target.value = e.key;
+  //   } else if (board[x][y] === "") {
+  //     e.target.value = " ";
+  //   }
+  // };
+
+  function findSelected() {
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 9; y++) {
+        if (board[x][y].selected) {
+          return board[x][y];
+        }
+      }
     }
+    return null;
+  }
+
+  const highlightCell = (cell) => {
+    let curSelCell = findSelected();
+    if (curSelCell) {
+      curSelCell.toggleHighlight();
+      document
+        .querySelector(`#c${curSelCell.x}-${curSelCell.y}`)
+        .classList.remove("cell-highlight");
+    }
+    cell.classList.add("cell-highlight");
+    let x = cell.id.substring(1, 2);
+    let y = cell.id.substring(3, 4);
+    board[x][y].toggleHighlight();
   };
 
   return (
     <>
-      <form>
-        <div id="sudoku-board">
-          <label htmlFor="board">Enter values for the sudoku board</label>
-          {board.map((row, x) => {
+      <h1>Enter values for the sudoku board</h1>
+      <ul id="sudoku-board">
+        {board.map((row, x) => {
+          return row.map((cell, y) => {
             return (
-              <div key={`row ${x}`}>
-                <br key={row} />
-                {row.map((cell, y) => {
-                  return (
-                    <input
-                      type="text"
-                      maxLength="1"
-                      pattern="[1-9] | ^$"
-                      id={`${x}-${y}`}
-                      key={`${x}-${y}`}
-                      defaultValue=""
-                      onKeyPress={(e) => updateCell(e)}
-                    />
-                  );
-                })}
-              </div>
+              <li
+                className="cell"
+                id={`c${x}-${y}`}
+                key={`${x}-${y}`}
+                onClick={(e) => highlightCell(e.target)}
+              ></li>
             );
-          })}
-        </div>
-        <div id="board-menu">
-          <button onClick={(e) => processBoard(e)}>Submit</button>
-          <button>Clear</button>
-        </div>
-      </form>
+          });
+        })}
+      </ul>
+      <div id="board-menu">
+        <button onClick={(e) => processBoard(e)}>Submit</button>
+        <button>Clear</button>
+      </div>
+      {/* </form> */}
     </>
   );
 }

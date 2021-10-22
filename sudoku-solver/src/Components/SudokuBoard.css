@@ -1,0 +1,16 @@
+.cell {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(206, 206, 206);
+}
+
+.cell-highlight {
+  background-color: rgb(118, 118, 255);
+}
+
+#sudoku-board {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(9, 20px);
+  gap: 5px;
+}
