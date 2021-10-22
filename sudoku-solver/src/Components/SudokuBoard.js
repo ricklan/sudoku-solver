@@ -64,51 +64,47 @@ export function SudokuBoard() {
     let y = parseInt(e.target.id.substring(3, 4));
     let curSelCell = findSelected();
     if (e.key >= "1" && e.key <= "9") {
+      highlightCell(e.target);
       board[x][y].value = e.key;
       console.log(board[x][y]);
       e.target.innerHTML = e.key;
     } else if (
-      (e.key === "ArrowUp" ||
-        e.key === "ArrowDown" ||
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight") &&
-      curSelCell
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown" ||
+      e.key === "ArrowLeft" ||
+      e.key === "ArrowRight"
     ) {
-      let newHighlightX;
-      let newHighlightY;
-      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-        if (
-          (curSelCell.x === 0 && e.key === "ArrowUp") ||
-          (curSelCell.x === 8 && e.key === "ArrowDown")
-        ) {
-          newHighlightX = curSelCell.x;
-        } else {
-          if (e.key === "ArrowUp") {
-            newHighlightX = curSelCell.x - 1;
-          } else {
-            newHighlightX = curSelCell.x + 1;
-          }
-        }
-        newHighlightY = curSelCell.y;
-      } else {
-        if (
-          (curSelCell.y === 0 && e.key === "ArrowLeft") ||
-          (curSelCell.y === 8 && e.key === "ArrowRight")
-        ) {
-          newHighlightY = curSelCell.y;
-        } else {
-          if (e.key === "ArrowLeft") {
-            newHighlightY = curSelCell.y - 1;
-          } else {
-            newHighlightY = curSelCell.y + 1;
-          }
-        }
-        newHighlightX = curSelCell.x;
-      }
-      highlightCell(
-        document.querySelector(`#c${newHighlightX}-${newHighlightY}`)
-      );
+      processArrowKey(e, curSelCell);
     }
+  };
+
+  const move = (key, cellPos) => {
+    if (cellPos === 0 && (key === "ArrowUp" || key === "ArrowLeft")) {
+      return 8;
+    } else if (cellPos === 8 && (key === "ArrowDown" || key === "ArrowRight")) {
+      return 0;
+    } else {
+      if (key === "ArrowUp" || key === "ArrowLeft") {
+        return cellPos - 1;
+      } else {
+        return cellPos + 1;
+      }
+    }
+  };
+
+  const processArrowKey = (e, curSelCell) => {
+    let newHighlightX;
+    let newHighlightY;
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      newHighlightX = move(e.key, curSelCell.x);
+      newHighlightY = curSelCell.y;
+    } else {
+      newHighlightX = curSelCell.x;
+      newHighlightY = move(e.key, curSelCell.y);
+    }
+    highlightCell(
+      document.querySelector(`#c${newHighlightX}-${newHighlightY}`)
+    );
   };
 
   return (
