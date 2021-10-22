@@ -47,24 +47,22 @@ export function SudokuBoard() {
   let selectCell = (cellTag) => {
     let curSelCell = findSelected();
     if (curSelCell) {
-      removeHighlight(curSelCell, "cell-highlight");
+      removeHighlight(curSelCell.getTag(), "cell-highlight");
+      curSelCell.toggleSelected();
     }
     highlightCell(cellTag, "cell-highlight");
+    let x = cellTag.id.substring(1, 2);
+    let y = cellTag.id.substring(3, 4);
+    board[x][y].toggleSelected();
     cellTag.focus();
   };
 
   const highlightCell = (cellTag, classToAdd) => {
     cellTag.classList.add(classToAdd);
-    let x = cellTag.id.substring(1, 2);
-    let y = cellTag.id.substring(3, 4);
-    board[x][y].toggleSelected();
   };
 
-  const removeHighlight = (cell, classToRemove) => {
-    cell.toggleSelected();
-    document
-      .querySelector(`#c${cell.x}-${cell.y}`)
-      .classList.remove(classToRemove);
+  const removeHighlight = (cellTag, classToRemove) => {
+    cellTag.classList.remove(classToRemove);
   };
 
   const processKeyDown = (e) => {
@@ -74,8 +72,10 @@ export function SudokuBoard() {
     if (e.key >= "1" && e.key <= "9") {
       selectCell(e.target);
       board[x][y].value = e.key;
-      console.log(board[x][y]);
       e.target.innerHTML = e.key;
+      checkRow(x);
+      //checkColumn(cellTag, x, y, curCellVal);
+      //checkSquare(cellTag, x, y, curCellVal);
     } else if (
       e.key === "ArrowUp" ||
       e.key === "ArrowDown" ||
@@ -84,6 +84,42 @@ export function SudokuBoard() {
     ) {
       processArrowKey(e, curSelCell);
     }
+  };
+
+  const validateCell = (cell1, cell2) => {
+    let isValidCell = true;
+    if (cell1.value !== "" && cell2.value === cell1.value) {
+      isValidCell = false;
+      cell2.hasError = true;
+      highlightCell(cell2.getTag(), "cell-highlight-error");
+    }
+    return isValidCell;
+  };
+
+  const checkRow = (row) => {
+    board[row].forEach((curCell, i) => {
+      let isValidCell = true;
+      for (let j = 0; j < 8; j++) {
+        if (i !== j && !validateCell(curCell, board[row][j])) {
+          isValidCell = false;
+        }
+      }
+      if (!isValidCell) {
+        curCell.hasError = true;
+        highlightCell(curCell.getTag(), "cell-highlight-error");
+      } else {
+        curCell.hasError = false;
+        removeHighlight(curCell.getTag(), "cell-highlight-error");
+      }
+    });
+  };
+
+  const checkColumn = (cellTag, x, y, curCellVal) => {
+    //
+  };
+
+  const checkSquare = (cellTag, x, y, curCellVal) => {
+    //
   };
 
   const move = (key, cellPos) => {
@@ -110,7 +146,7 @@ export function SudokuBoard() {
       newHighlightX = curSelCell.x;
       newHighlightY = move(e.key, curSelCell.y);
     }
-    selectCell(document.querySelector(`#c${newHighlightX}-${newHighlightY}`));
+    selectCell(board[newHighlightX][newHighlightY].getTag());
   };
 
   return (
