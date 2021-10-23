@@ -74,8 +74,8 @@ export function SudokuBoard() {
       board[x][y].value = e.key;
       e.target.innerHTML = e.key;
       checkRow(x);
-      //checkColumn(cellTag, x, y, curCellVal);
-      //checkSquare(cellTag, x, y, curCellVal);
+      checkColumn(y);
+      checkSquare(x, y);
     } else if (
       e.key === "ArrowUp" ||
       e.key === "ArrowDown" ||
@@ -106,11 +106,36 @@ export function SudokuBoard() {
     });
   };
 
-  const checkColumn = (cellTag, x, y, curCellVal) => {
+  const checkColumn = (y) => {
+    board.forEach((row1, x1) => {
+      let isValidCell = true;
+      board.forEach((row2, x2) => {
+        if (x1 !== x2 && !validateCell(board[x1][y], board[x2][y])) {
+          isValidCell = false;
+        }
+      });
+      if (!isValidCell) {
+        board[x1][y].hasDupCol = true;
+        highlightCell(board[x1][y].getTag(), "cell-highlight-error");
+      } else {
+        board[x1][y].hasDupCol = false;
+        if (!board[x1][y].hasDupRow && !board[x1][y].hasDupSquare) {
+          removeHighlight(board[x1][y].getTag(), "cell-highlight-error");
+        }
+      }
+    });
+  };
+
+  const checkSquare = (x, y) => {
+    let xRange = findXRange(x);
+    let yRange = findYRange(y);
+  };
+
+  const findXRange = (x) => {
     //
   };
 
-  const checkSquare = (cellTag, x, y, curCellVal) => {
+  const findYRange = (y) => {
     //
   };
 
