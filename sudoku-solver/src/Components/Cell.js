@@ -2,7 +2,9 @@ class Cell {
   constructor(value, selected, x, y) {
     this.value = "";
     this.selected = selected;
-    this.hasError = false;
+    this.hasDupRow = false;
+    this.hasDupCol = false;
+    this.hasDupSquare = false;
     this.x = x;
     this.y = y;
   }
