@@ -11,9 +11,6 @@ class Cell {
   toggleSelected() {
     this.selected = !this.selected;
   }
-  toggleError() {
-    this.hasError = !this.hasError;
-  }
   getTag() {
     return document.querySelector(`#c${this.x}-${this.y}`);
   }
