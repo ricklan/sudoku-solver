@@ -14,23 +14,41 @@ export function SudokuBoard() {
   //https://online-sudoku-solver.herokuapp.com/api/solvePuzzle
   const processBoard = (e) => {
     e.preventDefault();
-    const axios = require("axios");
-    axios
-      .post(
-        "https://online-sudoku-solver.herokuapp.com/api/solvePuzzle",
-        board,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+    let boardArray = convertToArray();
+    console.log(boardArray);
+    // const axios = require("axios");
+    // axios
+    //   .post(
+    //     "https://online-sudoku-solver.herokuapp.com/api/solvePuzzle",
+    //     board,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+  };
+
+  const convertToArray = () => {
+    let boardArray = [];
+    board.forEach((row) => {
+      let newRow = [];
+      row.forEach((cell) => {
+        if (cell.value === "") {
+          newRow.push(0);
+        } else {
+          newRow.push(parseInt(cell.value));
         }
-      )
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+      boardArray.push(newRow);
+    });
+    return boardArray;
   };
 
   const findSelected = () => {
