@@ -73,10 +73,9 @@ export function SudokuBoard() {
       selectCell(e.target);
       board[x][y].value = e.key;
       e.target.innerHTML = e.key;
-      checkRow(x, 0, 8);
-      checkColumn(y, 0, 8);
+      checkRow(x);
+      checkColumn(y);
       checkSquare(x, y);
-      // console.log(board);
     } else if (
       e.key === "ArrowUp" ||
       e.key === "ArrowDown" ||
@@ -87,7 +86,7 @@ export function SudokuBoard() {
     }
   };
 
-  const checkRow = (row, start, end) => {
+  const checkRow = (row) => {
     let isValidCell = true;
     board[row].forEach((curCell) => {
       isValidCell = checkSection(true, false, curCell, board[row]);
@@ -104,11 +103,15 @@ export function SudokuBoard() {
     });
   };
 
-  const checkColumn = (y, start, end) => {
+  const checkColumn = (y) => {
     let isValidCell = true;
-    for (let x1 = start; x1 <= end; x1++) {
-      let curCell = board[x1][y];
-      isValidCell = checkSection2(start, end, false, y, false, curCell);
+    let cellsToCheck = [];
+    for (let x = 0; x <= 8; x++) {
+      cellsToCheck.push(board[x][y]);
+    }
+
+    cellsToCheck.forEach((curCell) => {
+      isValidCell = checkSection(false, false, curCell, cellsToCheck);
 
       if (!isValidCell) {
         curCell.hasDupCol = true;
@@ -119,7 +122,7 @@ export function SudokuBoard() {
           removeHighlight(curCell.getTag(), "cell-highlight-error");
         }
       }
-    }
+    });
   };
 
   const checkSquare = (row, col) => {
@@ -172,32 +175,6 @@ export function SudokuBoard() {
         isValidCell = false;
       }
     });
-    return isValidCell;
-  };
-
-  const checkSection2 = (
-    start,
-    end,
-    checkingRow,
-    coord1,
-    checkingSquare,
-    cell1
-  ) => {
-    let isValidCell = true;
-    for (let coord2 = start; coord2 <= end; coord2++) {
-      let cell2;
-      if (checkingRow) {
-        cell2 = board[coord1][coord2];
-      } else {
-        cell2 = board[coord2][coord1];
-      }
-      if (
-        !(cell1.x === cell2.x && cell1.y === cell2.y) &&
-        !validateCell(cell1, cell2, checkingRow, checkingSquare)
-      ) {
-        isValidCell = false;
-      }
-    }
     return isValidCell;
   };
 
