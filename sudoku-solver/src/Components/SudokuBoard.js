@@ -89,9 +89,8 @@ export function SudokuBoard() {
 
   const checkRow = (row, start, end) => {
     let isValidCell = true;
-    for (let i = start; i <= end; i++) {
-      let curCell = board[row][i];
-      isValidCell = checkSection2(start, end, true, row, false, curCell);
+    board[row].forEach((curCell) => {
+      isValidCell = checkSection(true, false, curCell, board[row]);
 
       if (!isValidCell) {
         curCell.hasDupRow = true;
@@ -102,7 +101,7 @@ export function SudokuBoard() {
           removeHighlight(curCell.getTag(), "cell-highlight-error");
         }
       }
-    }
+    });
   };
 
   const checkColumn = (y, start, end) => {
