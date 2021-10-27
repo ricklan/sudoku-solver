@@ -86,10 +86,15 @@ export function SudokuBoard() {
     let x = parseInt(e.target.id.substring(1, 2));
     let y = parseInt(e.target.id.substring(3, 4));
     let curSelCell = findSelected();
-    if (e.key >= "1" && e.key <= "9") {
+    if ((e.key >= "0" && e.key <= "9") || e.key === "Delete") {
       selectCell(e.target);
-      board[x][y].value = e.key;
-      e.target.innerHTML = e.key;
+      if (e.key === "0" || e.key === "Delete") {
+        board[x][y].value = "";
+        e.target.innerHTML = "";
+      } else {
+        board[x][y].value = e.key;
+        e.target.innerHTML = e.key;
+      }
       checkRow(x);
       checkColumn(y);
       checkSquare(x, y);
