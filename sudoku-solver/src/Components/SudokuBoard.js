@@ -238,6 +238,15 @@ export function SudokuBoard() {
     selectCell(board[newHighlightX][newHighlightY].getTag());
   };
 
+  const clearBoard = () => {
+    board.forEach((row) => {
+      row.forEach((cell) => {
+        cell.value = "";
+        cell.getTag().innerHTML = "";
+      });
+    });
+  };
+
   return (
     <>
       <h1>Enter values for the sudoku board</h1>
@@ -259,7 +268,7 @@ export function SudokuBoard() {
       </ul>
       <div id="board-menu">
         <button onClick={(e) => processBoard(e)}>Submit</button>
-        <button>Clear</button>
+        <button onClick={() => clearBoard()}>Clear</button>
         <p id="error-message"></p>
       </div>
     </>
