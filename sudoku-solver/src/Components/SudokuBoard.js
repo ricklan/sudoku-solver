@@ -61,12 +61,8 @@ export function SudokuBoard() {
     return null;
   };
 
-  let selectCell = (cellTag) => {
-    let curSelCell = findSelected();
-    if (curSelCell) {
-      removeHighlight(curSelCell.getTag(), "cell-highlight");
-      curSelCell.toggleSelected();
-    }
+  const selectCell = (cellTag) => {
+    clearCurSelectedCell();
     highlightCell(cellTag, "cell-highlight");
     let x = cellTag.id.substring(1, 2);
     let y = cellTag.id.substring(3, 4);
@@ -248,8 +244,21 @@ export function SudokuBoard() {
       row.forEach((cell) => {
         cell.value = "";
         cell.getTag().innerHTML = "";
+        cell.hasDupCol = false;
+        cell.hasDupRow = false;
+        cell.hasDupSquare = false;
+        removeHighlight(cell.getTag(), "cell-highlight-error");
       });
     });
+    clearCurSelectedCell();
+  };
+
+  const clearCurSelectedCell = () => {
+    let curSelCell = findSelected();
+    if (curSelCell) {
+      curSelCell.toggleSelected();
+      removeHighlight(curSelCell.getTag(), "cell-highlight");
+    }
   };
 
   return (
