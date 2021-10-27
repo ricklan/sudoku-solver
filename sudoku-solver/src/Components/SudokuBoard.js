@@ -16,12 +16,12 @@ export function SudokuBoard() {
     axios
       .post("http://127.0.0.1:5000/api/solvePuzzle", { puzzle: boardArray })
       .then(function (response) {
-        console.log(response.data);
         displayAnswer(response.data);
+        document.querySelector("#error-message").innerHTML = "";
       })
       .catch(function (error) {
         console.log(error);
-        //display error
+        document.querySelector("#error-message").innerHTML = "Invalid Puzzle";
       });
   };
 
@@ -260,6 +260,7 @@ export function SudokuBoard() {
       <div id="board-menu">
         <button onClick={(e) => processBoard(e)}>Submit</button>
         <button>Clear</button>
+        <p id="error-message"></p>
       </div>
     </>
   );
