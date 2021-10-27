@@ -1,8 +1,5 @@
-// import axios from "axios";
 import "./SudokuBoard.css";
 import Cell from "./Cell";
-
-// axios.defaults.baseURL = "https://online-sudoku-solver.herokuapp.com";
 
 export function SudokuBoard() {
   let board = [...Array(9)].map((i, x) => {
@@ -16,23 +13,15 @@ export function SudokuBoard() {
     e.preventDefault();
     let boardArray = convertToArray();
     console.log(boardArray);
-    // const axios = require("axios");
-    // axios
-    //   .post(
-    //     "https://online-sudoku-solver.herokuapp.com/api/solvePuzzle",
-    //     board,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    const axios = require("axios");
+    axios
+      .post("http://127.0.0.1:5000/api/solvePuzzle", { puzzle: boardArray })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const convertToArray = () => {
