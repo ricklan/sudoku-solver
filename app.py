@@ -167,7 +167,7 @@ def solveSudoku():
             else:
                 return _corsify_actual_response(jsonify("Puzzle not solvable")), 400
         else:
-            return "Invalid Puzzle", 404
+            return _corsify_actual_response(jsonify("Invalid Puzzle")), 404
 
 def _build_cors_preflight_response():
     response = make_response()

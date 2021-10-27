@@ -12,7 +12,6 @@ export function SudokuBoard() {
   const processBoard = (e) => {
     e.preventDefault();
     let boardArray = convertToArray();
-    console.log(boardArray);
     const axios = require("axios");
     axios
       .post("http://127.0.0.1:5000/api/solvePuzzle", { puzzle: boardArray })
