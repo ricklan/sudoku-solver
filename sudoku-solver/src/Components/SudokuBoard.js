@@ -16,10 +16,12 @@ export function SudokuBoard() {
     axios
       .post("http://127.0.0.1:5000/api/solvePuzzle", { puzzle: boardArray })
       .then(function (response) {
-        console.log(response);
+        console.log(response.data);
+        displayAnswer(response.data);
       })
       .catch(function (error) {
         console.log(error);
+        //display error
       });
   };
 
@@ -37,6 +39,15 @@ export function SudokuBoard() {
       boardArray.push(newRow);
     });
     return boardArray;
+  };
+
+  const displayAnswer = (answerArray) => {
+    board.forEach((row, x) => {
+      row.forEach((cell, y) => {
+        cell.getTag().innerHTML = answerArray[x][y];
+        cell.value = answerArray[x][y];
+      });
+    });
   };
 
   const findSelected = () => {
