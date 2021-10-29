@@ -1,6 +1,12 @@
 import "../css/SudokuBoard.css";
 import Cell from "../classes/Cell";
 
+/**
+ * A component that represents the sudoku board puzzle and its functions,
+ * including its submit and clear buttons.
+ * @returns {HTMLElement} A React HTML element representing the sudoku board
+ * puzzle and its submit and clear buttons.
+ */
 export function SudokuBoard() {
   let board = [...Array(9)].map((i, row) => {
     return [...Array(9)].map((j, col) => {
@@ -8,6 +14,12 @@ export function SudokuBoard() {
     });
   });
 
+  /**
+   * Processes the input from the sudoku board puzzle and makes an api call to
+   * the backend to solve the puzzle. If the puzzle has a solution it will be
+   * displayed, otherwise an error will display.
+   * @param {event} e - The event that triggers this function.
+   */
   //https://online-sudoku-solver.herokuapp.com/api/solvePuzzle
   const processBoard = (e) => {
     e.preventDefault();
@@ -26,6 +38,11 @@ export function SudokuBoard() {
       });
   };
 
+  /**
+   * Creates and returns a representation of the sudoku board as a 2D array of
+   * integers.
+   * @returns {Array} Representation of the board as integers in a 2D array.
+   */
   const convertToArray = () => {
     let boardArray = [];
     board.forEach((row) => {
@@ -42,6 +59,10 @@ export function SudokuBoard() {
     return boardArray;
   };
 
+  /**
+   * Displays the answer to a sudoku puzzle provided by answerArray.
+   * @param {Array} answerArray - The solution to a sudoku puzzle to display.
+   */
   const displayAnswer = (answerArray) => {
     board.forEach((row, x) => {
       row.forEach((cell, y) => {
@@ -51,6 +72,11 @@ export function SudokuBoard() {
     });
   };
 
+  /**
+   * Returns the Cell object that is currently selected by the user, otherwise
+   * return null.
+   * @returns {Cell} Cell that is currently selected by the user.
+   */
   const findSelected = () => {
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
@@ -62,6 +88,11 @@ export function SudokuBoard() {
     return null;
   };
 
+  /**
+   * Selects cellTag by setting it to focus and sets its Cell object equivalent
+   * to true.
+   * @param {HTMLElement} cellTag - The cell HTML Element to select.
+   */
   const selectCell = (cellTag) => {
     let row = cellTag.id.substring(1, 2);
     let col = cellTag.id.substring(3, 4);
@@ -69,7 +100,13 @@ export function SudokuBoard() {
     cellTag.focus();
   };
 
+  /**
+   * Processes and modifies the appearance of the sudoku board based on e's
+   * key that is pressed.
+   * @param {Event} e - The Event that triggers this function.
+   */
   const processKeyDown = (e) => {
+    e.preventDefault();
     let row = parseInt(e.target.id.substring(1, 2));
     let col = parseInt(e.target.id.substring(3, 4));
     let curSelCell = findSelected();
@@ -94,10 +131,15 @@ export function SudokuBoard() {
     }
   };
 
+  /**
+   * Checks the row of the sudoku board and modifies the appearance of the board
+   * and its array equivalent based on whether duplicate numbers are found.
+   * @param {number} row - The row number to check.
+   */
   const checkRow = (row) => {
     let isValidCell = true;
     board[row].forEach((curCell) => {
-      isValidCell = checkSection(true, false, curCell, board[row]);
+      isValidCell = checkSection("row", curCell, board[row]);
       let cellTag = curCell.getTag();
       if (!isValidCell) {
         curCell.setDupRow(true);
@@ -111,6 +153,11 @@ export function SudokuBoard() {
     });
   };
 
+  /**
+   * Checks the col of the sudoku board and modifies the appearance of the board
+   * and its array equivalent based on whether duplicate numbers are found.
+   * @param {number} col - The column number to check for.
+   */
   const checkColumn = (col) => {
     let isValidCell = true;
     let cellsToCheck = [];
@@ -119,7 +166,7 @@ export function SudokuBoard() {
     }
 
     cellsToCheck.forEach((curCell) => {
-      isValidCell = checkSection(false, false, curCell, cellsToCheck);
+      isValidCell = checkSection("col", curCell, cellsToCheck);
       let cellTag = curCell.getTag();
       if (!isValidCell) {
         curCell.setDupCol(true);
@@ -133,6 +180,12 @@ export function SudokuBoard() {
     });
   };
 
+  /**
+   * Checks the 3x3 square of the sudoku board and modifies the appearance of the
+   * board and its array equivalent based on whether dusplicate numbers are found.
+   * @param {number} row - The row of the Cell that had its value modified.
+   * @param {number} col - The column of the Cell that had its value modified.
+   */
   const checkSquare = (row, col) => {
     let rowRange = findRange(row);
     let colRange = findRange(col);
@@ -146,8 +199,8 @@ export function SudokuBoard() {
       let isValidCell = true;
       for (let i = 0; i < 3; i++) {
         if (
-          !checkSection(false, true, cell, cellsToCheck) ||
-          !checkSection(false, true, cell, cellsToCheck)
+          !checkSection("square", cell, cellsToCheck) /*||
+          !checkSection(false, true, cell, cellsToCheck)*/
         ) {
           isValidCell = false;
         }
@@ -166,6 +219,13 @@ export function SudokuBoard() {
     });
   };
 
+  /**
+   * Finds the range of the rows or columns of the 3x3 square that the most
+   * recently modified Cell is part of.
+   * @param {number} coord - The row or column of Cell that had its value modified.
+   * @returns {Array} An array containing the row or column range of the 3x3
+   * square that the most recently modified Cell is part of.
+   */
   const findRange = (coord) => {
     if (coord <= 2) {
       return [0, 2];
@@ -175,7 +235,17 @@ export function SudokuBoard() {
     return [3, 5];
   };
 
-  const checkSection = (checkingRow, checkingSquare, curCell, cellsToCheck) => {
+  /**
+   * Returns true if curCell does not contain the same value as any other cells
+   * in cellsToCheck, within a specified section (row, column, or square). Returns
+   * false otherwise.
+   * @param {string} section - The section to check. Must be either "row",
+   * "col", or "square".
+   * @param {Cell} curCell - The Cell to check duplicates for.
+   * @param {Array} cellsToCheck - The Cells to compare to curCell.
+   * @returns {boolean} Whether the section contains any duplicate values.
+   */
+  const checkSection = (section, curCell, cellsToCheck) => {
     let isValidCell = true;
     cellsToCheck.forEach((otherCell) => {
       if (
@@ -183,7 +253,7 @@ export function SudokuBoard() {
           curCell.getRow() === otherCell.getRow() &&
           curCell.getCol() === otherCell.getCol()
         ) &&
-        !validateCell(curCell, otherCell, checkingRow, checkingSquare)
+        !validateCell(curCell, otherCell, section)
       ) {
         isValidCell = false;
       }
@@ -191,13 +261,21 @@ export function SudokuBoard() {
     return isValidCell;
   };
 
-  const validateCell = (cell1, cell2, checkingRow, checkingSquare) => {
+  /**
+   * Returns true if cell1 and cell2's values are the same (meaning they are not
+   * valid cells). Returns false otherwise. Modifies cell2's values based on this conclusion.
+   * @param {Cell} cell1 - The first Cell to compare.
+   * @param {Cell} cell2 - The second Cell to compare.
+   * @param {string} section - The section to check ("row", "col", or "square")
+   * @returns {boolean} Whether cell1 and cell2's values are the same.
+   */
+  const validateCell = (cell1, cell2, section) => {
     let isValidCell = true;
     if (cell1.getValue() !== "" && cell2.getValue() === cell1.getValue()) {
       isValidCell = false;
-      if (checkingSquare) {
+      if (section === "square") {
         cell2.setDupSquare(true);
-      } else if (checkingRow) {
+      } else if (section === "row") {
         cell2.setDupRow(true);
       } else {
         cell2.setDupCol(true);
@@ -207,6 +285,15 @@ export function SudokuBoard() {
     return isValidCell;
   };
 
+  /**
+   * Returns the coordinate (row or column) of the new cell that would be
+   * selected based on the key pressed and cellPos.
+   * @param {String} key - The arrow key that was pressed ("ArrowUp",
+   * "ArrowDown", "ArrowLeft", or "ArrowRight")
+   * @param {number} cellPos - The row or column of the Cell that was recently
+   * modified.
+   * @returns {number} The coordinate of the new cell that would be selected.
+   */
   const move = (key, cellPos) => {
     if (cellPos === 0 && (key === "ArrowUp" || key === "ArrowLeft")) {
       return 8;
@@ -221,6 +308,12 @@ export function SudokuBoard() {
     }
   };
 
+  /**
+   * Determines and selects the new Cell based on they key that e triggers and
+   * curSelCell.
+   * @param {Event} e - The event that triggers this function.
+   * @param {Cell} curSelCell - The currently selected Cell.
+   */
   const processArrowKey = (e, curSelCell) => {
     let newHighlightRow;
     let newHighlightCol;
@@ -234,6 +327,9 @@ export function SudokuBoard() {
     board[newHighlightRow][newHighlightCol].getTag().focus();
   };
 
+  /**
+   * Resets the sudoku board to be blank.
+   */
   const clearBoard = () => {
     board.forEach((row) => {
       row.forEach((cell) => {
@@ -247,7 +343,12 @@ export function SudokuBoard() {
     });
   };
 
-  const clearCurSelectedCell = (cellTag) => {
+  /**
+   * Deselects cellTag and its Cell counterpart.
+   * @param {HTMLElement} cellTag - The HTML Element representing the Cell to be
+   * deselected.
+   */
+  const deselectCurSelectedCell = (cellTag) => {
     let row = parseInt(cellTag.id.substring(1, 2));
     let col = parseInt(cellTag.id.substring(3, 4));
     board[row][col].toggleSelected();
@@ -266,7 +367,7 @@ export function SudokuBoard() {
                 key={`${x}-${y}`}
                 onKeyDown={(e) => processKeyDown(e)}
                 onFocus={(e) => selectCell(e.target)}
-                onBlur={(e) => clearCurSelectedCell(e.target)}
+                onBlur={(e) => deselectCurSelectedCell(e.target)}
                 tabIndex="0"
               ></li>
             );
