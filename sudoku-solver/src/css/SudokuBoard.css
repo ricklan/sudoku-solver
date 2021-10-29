@@ -13,6 +13,10 @@
   background-color: rgb(255, 166, 166);
 }
 
+.cell-user-entered {
+  font-weight: bold;
+}
+
 #sudoku-board {
   list-style-type: none;
   display: grid;

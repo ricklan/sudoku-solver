@@ -107,16 +107,22 @@ export function SudokuBoard() {
    */
   const processKeyDown = (e) => {
     e.preventDefault();
-    let row = parseInt(e.target.id.substring(1, 2));
-    let col = parseInt(e.target.id.substring(3, 4));
+    let curCellTag = e.target;
+    let row = parseInt(curCellTag.id.substring(1, 2));
+    let col = parseInt(curCellTag.id.substring(3, 4));
     let curSelCell = findSelected();
     if ((e.key >= "0" && e.key <= "9") || e.key === "Delete") {
+      let curCell = board[row][col];
       if (e.key === "0" || e.key === "Delete") {
-        board[row][col].setValue("");
-        e.target.innerHTML = "";
+        curCell.setValue("");
+        curCell.setUserEntered(false);
+        curCellTag.classList.remove("cell-user-entered");
+        curCellTag.innerHTML = "";
       } else {
-        board[row][col].setValue(e.key);
-        e.target.innerHTML = e.key;
+        curCell.setValue(e.key);
+        curCell.setUserEntered(true);
+        curCellTag.classList.add("cell-user-entered");
+        curCellTag.innerHTML = e.key;
       }
       checkRow(row);
       checkColumn(col);
