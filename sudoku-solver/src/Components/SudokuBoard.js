@@ -54,7 +54,7 @@ export function SudokuBoard() {
   const findSelected = () => {
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
-        if (board[row][col].selected) {
+        if (board[row][col].getSelected()) {
           return board[row][col];
         }
       }
@@ -69,7 +69,7 @@ export function SudokuBoard() {
     cellTag.focus();
   };
 
-  const highlightCell = (cellTag, classToAdd) => {
+  const addClass = (cellTag, classToAdd) => {
     cellTag.classList.add(classToAdd);
   };
 
@@ -109,7 +109,7 @@ export function SudokuBoard() {
 
       if (!isValidCell) {
         curCell.setDupRow(true);
-        highlightCell(curCell.getTag(), "cell-highlight-error");
+        addClass(curCell.getTag(), "cell-highlight-error");
       } else {
         curCell.setDupRow(false);
         if (!curCell.getDupCol() && !curCell.getDupSquare()) {
@@ -131,7 +131,7 @@ export function SudokuBoard() {
 
       if (!isValidCell) {
         curCell.setDupCol(true);
-        highlightCell(curCell.getTag(), "cell-highlight-error");
+        addClass(curCell.getTag(), "cell-highlight-error");
       } else {
         curCell.setDupCol(false);
         if (!curCell.getDupRow() && !curCell.getDupSquare()) {
@@ -162,7 +162,7 @@ export function SudokuBoard() {
       }
       if (!isValidCell) {
         cell.setDupSquare(true);
-        highlightCell(cell.getTag(), "cell-highlight-error");
+        addClass(cell.getTag(), "cell-highlight-error");
       } else {
         cell.setDupSquare(false);
         if (!cell.getDupRow() && !cell.getDupCol()) {
@@ -208,7 +208,7 @@ export function SudokuBoard() {
       } else {
         cell2.setDupCol(true);
       }
-      highlightCell(cell2.getTag(), "cell-highlight-error");
+      addClass(cell2.getTag(), "cell-highlight-error");
     }
     return isValidCell;
   };

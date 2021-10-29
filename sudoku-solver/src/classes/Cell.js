@@ -7,9 +7,13 @@ class Cell {
     this.hasDupSquare = false;
     this.row = row;
     this.col = col;
+    this.userEntered = false;
   }
   toggleSelected() {
     this.selected = !this.selected;
+  }
+  getSelected() {
+    return this.selected;
   }
   getTag() {
     return document.querySelector(`#c${this.row}-${this.col}`);
@@ -43,6 +47,9 @@ class Cell {
   }
   getCol() {
     return this.col;
+  }
+  setUserEntered(isUserEntered) {
+    this.userEntered = isUserEntered;
   }
 }
 
