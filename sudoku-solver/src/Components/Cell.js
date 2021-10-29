@@ -1,18 +1,48 @@
 class Cell {
-  constructor(value, selected, x, y) {
+  constructor(row, col) {
     this.value = "";
-    this.selected = selected;
+    this.selected = false;
     this.hasDupRow = false;
     this.hasDupCol = false;
     this.hasDupSquare = false;
-    this.x = x;
-    this.y = y;
+    this.row = row;
+    this.col = col;
   }
   toggleSelected() {
     this.selected = !this.selected;
   }
   getTag() {
-    return document.querySelector(`#c${this.x}-${this.y}`);
+    return document.querySelector(`#c${this.row}-${this.col}`);
+  }
+  getValue() {
+    return this.value;
+  }
+  setValue(value) {
+    this.value = value;
+  }
+  setDupRow(hasDupRow) {
+    this.hasDupRow = hasDupRow;
+  }
+  getDupRow() {
+    return this.hasDupRow;
+  }
+  setDupCol(hasDupCol) {
+    this.hasDupCol = hasDupCol;
+  }
+  getDupCol() {
+    return this.hasDupCol;
+  }
+  setDupSquare(hasDupSquare) {
+    this.hasDupSquare = hasDupSquare;
+  }
+  getDupSquare() {
+    return this.hasDupSquare;
+  }
+  getRow() {
+    return this.row;
+  }
+  getCol() {
+    return this.col;
   }
 }
 

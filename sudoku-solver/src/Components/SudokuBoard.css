@@ -4,7 +4,8 @@
   background-color: rgb(206, 206, 206);
 }
 
-.cell-highlight {
+.cell:hover,
+.cell:focus {
   background-color: rgb(118, 118, 255);
 }
 

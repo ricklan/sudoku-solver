@@ -158,7 +158,6 @@ def solveSudoku():
     else:
         # Gets the inputted puzzle
         puzzle = request.json["puzzle"]
-
         # Checks if the puzzle is valid or not
         if(checkValidPuzzle(puzzle)):
             result = solve_sudoku(puzzle)

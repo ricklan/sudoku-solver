@@ -2,9 +2,9 @@ import "./SudokuBoard.css";
 import Cell from "./Cell";
 
 export function SudokuBoard() {
-  let board = [...Array(9)].map((i, x) => {
-    return [...Array(9)].map((j, y) => {
-      return new Cell("", false, x, y);
+  let board = [...Array(9)].map((i, row) => {
+    return [...Array(9)].map((j, col) => {
+      return new Cell(row, col);
     });
   });
 
@@ -30,10 +30,10 @@ export function SudokuBoard() {
     board.forEach((row) => {
       let newRow = [];
       row.forEach((cell) => {
-        if (cell.value === "") {
+        if (cell.getValue() === "") {
           newRow.push(0);
         } else {
-          newRow.push(parseInt(cell.value));
+          newRow.push(parseInt(cell.getValue()));
         }
       });
       boardArray.push(newRow);
@@ -45,16 +45,16 @@ export function SudokuBoard() {
     board.forEach((row, x) => {
       row.forEach((cell, y) => {
         cell.getTag().innerHTML = answerArray[x][y];
-        cell.value = answerArray[x][y];
+        cell.setValue(answerArray[x][y]);
       });
     });
   };
 
   const findSelected = () => {
-    for (let x = 0; x < 9; x++) {
-      for (let y = 0; y < 9; y++) {
-        if (board[x][y].selected) {
-          return board[x][y];
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (board[row][col].selected) {
+          return board[row][col];
         }
       }
     }
@@ -62,11 +62,9 @@ export function SudokuBoard() {
   };
 
   const selectCell = (cellTag) => {
-    clearCurSelectedCell();
-    highlightCell(cellTag, "cell-highlight");
-    let x = cellTag.id.substring(1, 2);
-    let y = cellTag.id.substring(3, 4);
-    board[x][y].toggleSelected();
+    let row = cellTag.id.substring(1, 2);
+    let col = cellTag.id.substring(3, 4);
+    board[row][col].toggleSelected();
     cellTag.focus();
   };
 
@@ -79,21 +77,20 @@ export function SudokuBoard() {
   };
 
   const processKeyDown = (e) => {
-    let x = parseInt(e.target.id.substring(1, 2));
-    let y = parseInt(e.target.id.substring(3, 4));
+    let row = parseInt(e.target.id.substring(1, 2));
+    let col = parseInt(e.target.id.substring(3, 4));
     let curSelCell = findSelected();
     if ((e.key >= "0" && e.key <= "9") || e.key === "Delete") {
-      selectCell(e.target);
       if (e.key === "0" || e.key === "Delete") {
-        board[x][y].value = "";
+        board[row][col].setValue("");
         e.target.innerHTML = "";
       } else {
-        board[x][y].value = e.key;
+        board[row][col].setValue(e.key);
         e.target.innerHTML = e.key;
       }
-      checkRow(x);
-      checkColumn(y);
-      checkSquare(x, y);
+      checkRow(row);
+      checkColumn(col);
+      checkSquare(row, col);
     } else if (
       e.key === "ArrowUp" ||
       e.key === "ArrowDown" ||
@@ -110,33 +107,33 @@ export function SudokuBoard() {
       isValidCell = checkSection(true, false, curCell, board[row]);
 
       if (!isValidCell) {
-        curCell.hasDupRow = true;
+        curCell.setDupRow(true);
         highlightCell(curCell.getTag(), "cell-highlight-error");
       } else {
-        curCell.hasDupRow = false;
-        if (!curCell.hasDupCol && !curCell.hasDupSquare) {
+        curCell.setDupRow(false);
+        if (!curCell.getDupCol() && !curCell.getDupSquare()) {
           removeHighlight(curCell.getTag(), "cell-highlight-error");
         }
       }
     });
   };
 
-  const checkColumn = (y) => {
+  const checkColumn = (col) => {
     let isValidCell = true;
     let cellsToCheck = [];
-    for (let x = 0; x <= 8; x++) {
-      cellsToCheck.push(board[x][y]);
+    for (let row = 0; row <= 8; row++) {
+      cellsToCheck.push(board[row][col]);
     }
 
     cellsToCheck.forEach((curCell) => {
       isValidCell = checkSection(false, false, curCell, cellsToCheck);
 
       if (!isValidCell) {
-        curCell.hasDupCol = true;
+        curCell.setDupCol(true);
         highlightCell(curCell.getTag(), "cell-highlight-error");
       } else {
-        curCell.hasDupCol = false;
-        if (!curCell.hasDupRow && !curCell.hasDupSquare) {
+        curCell.setDupCol(false);
+        if (!curCell.getDupRow() && !curCell.getDupSquare()) {
           removeHighlight(curCell.getTag(), "cell-highlight-error");
         }
       }
@@ -163,11 +160,11 @@ export function SudokuBoard() {
         }
       }
       if (!isValidCell) {
-        cell.hasDupSquare = true;
+        cell.setDupSquare(true);
         highlightCell(cell.getTag(), "cell-highlight-error");
       } else {
-        cell.hasDupSquare = false;
-        if (!cell.hasDupRow && !cell.hasDupCol) {
+        cell.setDupSquare(false);
+        if (!cell.getDupRow() && !cell.getDupCol()) {
           removeHighlight(cell.getTag(), "cell-highlight-error");
         }
       }
@@ -187,7 +184,10 @@ export function SudokuBoard() {
     let isValidCell = true;
     cellsToCheck.forEach((otherCell) => {
       if (
-        !(curCell.x === otherCell.x && curCell.y === otherCell.y) &&
+        !(
+          curCell.getRow() === otherCell.getRow() &&
+          curCell.getCol() === otherCell.getCol()
+        ) &&
         !validateCell(curCell, otherCell, checkingRow, checkingSquare)
       ) {
         isValidCell = false;
@@ -198,14 +198,14 @@ export function SudokuBoard() {
 
   const validateCell = (cell1, cell2, checkingRow, checkingSquare) => {
     let isValidCell = true;
-    if (cell1.value !== "" && cell2.value === cell1.value) {
+    if (cell1.getValue() !== "" && cell2.getValue() === cell1.getValue()) {
       isValidCell = false;
       if (checkingSquare) {
-        cell2.hasDupSquare = true;
+        cell2.setDupSquare(true);
       } else if (checkingRow) {
-        cell2.hasDupRow = true;
+        cell2.setDupRow(true);
       } else {
-        cell2.hasDupCol = true;
+        cell2.setDupCol(true);
       }
       highlightCell(cell2.getTag(), "cell-highlight-error");
     }
@@ -227,38 +227,35 @@ export function SudokuBoard() {
   };
 
   const processArrowKey = (e, curSelCell) => {
-    let newHighlightX;
-    let newHighlightY;
+    let newHighlightRow;
+    let newHighlightCol;
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      newHighlightX = move(e.key, curSelCell.x);
-      newHighlightY = curSelCell.y;
+      newHighlightRow = move(e.key, curSelCell.getRow());
+      newHighlightCol = curSelCell.getCol();
     } else {
-      newHighlightX = curSelCell.x;
-      newHighlightY = move(e.key, curSelCell.y);
+      newHighlightRow = curSelCell.getRow();
+      newHighlightCol = move(e.key, curSelCell.getCol());
     }
-    selectCell(board[newHighlightX][newHighlightY].getTag());
+    board[newHighlightRow][newHighlightCol].getTag().focus();
   };
 
   const clearBoard = () => {
     board.forEach((row) => {
       row.forEach((cell) => {
-        cell.value = "";
+        cell.setValue("");
         cell.getTag().innerHTML = "";
-        cell.hasDupCol = false;
-        cell.hasDupRow = false;
-        cell.hasDupSquare = false;
+        cell.setDupCol(false);
+        cell.setDupRow(false);
+        cell.setDupSquare(false);
         removeHighlight(cell.getTag(), "cell-highlight-error");
       });
     });
-    clearCurSelectedCell();
   };
 
-  const clearCurSelectedCell = () => {
-    let curSelCell = findSelected();
-    if (curSelCell) {
-      curSelCell.toggleSelected();
-      removeHighlight(curSelCell.getTag(), "cell-highlight");
-    }
+  const clearCurSelectedCell = (cellTag) => {
+    let row = parseInt(cellTag.id.substring(1, 2));
+    let col = parseInt(cellTag.id.substring(3, 4));
+    board[row][col].toggleSelected();
   };
 
   return (
@@ -272,8 +269,9 @@ export function SudokuBoard() {
                 className="cell"
                 id={`c${x}-${y}`}
                 key={`${x}-${y}`}
-                onClick={(e) => selectCell(e.target)}
                 onKeyDown={(e) => processKeyDown(e)}
+                onFocus={(e) => selectCell(e.target)}
+                onBlur={(e) => clearCurSelectedCell(e.target)}
                 tabIndex="0"
               ></li>
             );
