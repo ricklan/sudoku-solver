@@ -1,4 +1,4 @@
-import "./App.css";
+import "../css/App.css";
 import { SudokuBoard } from "./SudokuBoard";
 import { BoardUse } from "./BoardUse";
 
