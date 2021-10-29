@@ -213,7 +213,7 @@ export function SudokuBoard() {
       } else {
         cell.setDupSquare(false);
         if (!cell.getDupRow() && !cell.getDupCol()) {
-          cellTag.classList.remove("cell-highglight-error");
+          cellTag.classList.remove("cell-highlight-error");
         }
       }
     });
