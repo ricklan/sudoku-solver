@@ -1,5 +1,5 @@
 import "./SudokuBoard.css";
-import Cell from "./Cell";
+import Cell from "../Cell";
 
 export function SudokuBoard() {
   let board = [...Array(9)].map((i, row) => {
