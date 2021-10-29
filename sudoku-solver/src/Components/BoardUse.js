@@ -1,3 +1,9 @@
+/**
+ * Returns a React element representing instructions on how to use the sudoku board.
+ * @returns {ReactElement} Returns a React element representing instructions on how
+ * to use the sudoku board.
+ */
+
 export function BoardUse() {
   /*todo:add images*/
   return (

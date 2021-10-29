@@ -2,9 +2,9 @@ import "../css/SudokuBoard.css";
 import Cell from "../classes/Cell";
 
 /**
- * A component that represents the sudoku board puzzle and its functions,
- * including its submit and clear buttons.
- * @returns {HTMLElement} A React HTML element representing the sudoku board
+ * Returns a React element that represents the sudoku board puzzle, including
+ * its submit and clear buttons.
+ * @returns {ReactElement} A React element representing the sudoku board
  * puzzle and its submit and clear buttons.
  */
 export function SudokuBoard() {
