@@ -1,12 +1,12 @@
 import "./App.css";
 import { SudokuBoard } from "./SudokuBoard";
-import { Controls } from "./Controls";
+import { BoardUse } from "./BoardUse";
 
 function App() {
   return (
     <div className="App">
       <SudokuBoard />
-      <Controls />
+      <BoardUse />
     </div>
   );
 }

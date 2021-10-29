@@ -260,7 +260,7 @@ export function SudokuBoard() {
 
   return (
     <>
-      <h1>Enter values for the sudoku board</h1>
+      <h2>Enter values into the board and hit submit to solve!</h2>
       <ul id="sudoku-board">
         {board.map((row, x) => {
           return row.map((cell, y) => {
