@@ -69,14 +69,6 @@ export function SudokuBoard() {
     cellTag.focus();
   };
 
-  const addClass = (cellTag, classToAdd) => {
-    cellTag.classList.add(classToAdd);
-  };
-
-  const removeHighlight = (cellTag, classToRemove) => {
-    cellTag.classList.remove(classToRemove);
-  };
-
   const processKeyDown = (e) => {
     let row = parseInt(e.target.id.substring(1, 2));
     let col = parseInt(e.target.id.substring(3, 4));
@@ -106,14 +98,14 @@ export function SudokuBoard() {
     let isValidCell = true;
     board[row].forEach((curCell) => {
       isValidCell = checkSection(true, false, curCell, board[row]);
-
+      let cellTag = curCell.getTag();
       if (!isValidCell) {
         curCell.setDupRow(true);
-        addClass(curCell.getTag(), "cell-highlight-error");
+        cellTag.classList.add("cell-highlight-error");
       } else {
         curCell.setDupRow(false);
         if (!curCell.getDupCol() && !curCell.getDupSquare()) {
-          removeHighlight(curCell.getTag(), "cell-highlight-error");
+          cellTag.classList.remove("cell-highlight-error");
         }
       }
     });
@@ -128,14 +120,14 @@ export function SudokuBoard() {
 
     cellsToCheck.forEach((curCell) => {
       isValidCell = checkSection(false, false, curCell, cellsToCheck);
-
+      let cellTag = curCell.getTag();
       if (!isValidCell) {
         curCell.setDupCol(true);
-        addClass(curCell.getTag(), "cell-highlight-error");
+        cellTag.classList.add("cell-highlight-error");
       } else {
         curCell.setDupCol(false);
         if (!curCell.getDupRow() && !curCell.getDupSquare()) {
-          removeHighlight(curCell.getTag(), "cell-highlight-error");
+          cellTag.classList.remove("cell-highlight-error");
         }
       }
     });
@@ -160,13 +152,15 @@ export function SudokuBoard() {
           isValidCell = false;
         }
       }
+
+      let cellTag = cell.getTag();
       if (!isValidCell) {
         cell.setDupSquare(true);
-        addClass(cell.getTag(), "cell-highlight-error");
+        cellTag.classList.add("cell-highlight-error");
       } else {
         cell.setDupSquare(false);
         if (!cell.getDupRow() && !cell.getDupCol()) {
-          removeHighlight(cell.getTag(), "cell-highlight-error");
+          cellTag.classList.remove("cell-highglight-error");
         }
       }
     });
@@ -208,7 +202,7 @@ export function SudokuBoard() {
       } else {
         cell2.setDupCol(true);
       }
-      addClass(cell2.getTag(), "cell-highlight-error");
+      cell2.getTag().classList.add("cell-highlight-error");
     }
     return isValidCell;
   };
@@ -248,7 +242,7 @@ export function SudokuBoard() {
         cell.setDupCol(false);
         cell.setDupRow(false);
         cell.setDupSquare(false);
-        removeHighlight(cell.getTag(), "cell-highlight-error");
+        cell.getTag().classList.remove("cell-highlight-error");
       });
     });
   };
