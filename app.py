@@ -132,7 +132,7 @@ def getSquare(row, col):
             return 1
         else:
             return 2
-    elif(3 <= col <= 5):
+    elif(3 <= row <= 5):
         if(0 <= col <= 2):
             return 3
         elif(3 <= col <= 5):
