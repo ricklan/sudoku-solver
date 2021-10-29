@@ -21,7 +21,8 @@ export function SudokuBoard() {
       })
       .catch(function (error) {
         console.log(error);
-        document.querySelector("#error-message").innerHTML = "Invalid Puzzle";
+        document.querySelector("#error-message").innerHTML =
+          error.response.data;
       });
   };
 
