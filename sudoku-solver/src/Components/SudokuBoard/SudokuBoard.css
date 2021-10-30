@@ -1,6 +1,6 @@
 .cell {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-color: rgb(206, 206, 206);
 }
 
@@ -17,9 +17,13 @@
   font-weight: bold;
 }
 
+ul {
+  padding-inline-start: 0px;
+}
+
 #sudoku-board {
   list-style-type: none;
-  display: grid;
-  grid-template-columns: repeat(9, 20px);
+  display: inline-grid;
+  grid-template-columns: repeat(9, 30px);
   gap: 5px;
 }
