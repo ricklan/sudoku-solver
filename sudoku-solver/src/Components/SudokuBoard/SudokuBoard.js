@@ -1,5 +1,5 @@
-import "../css/SudokuBoard.css";
-import Cell from "../classes/Cell";
+import "./SudokuBoard.css";
+import Cell from "../../classes/Cell";
 
 /**
  * Returns a React element that represents the sudoku board puzzle, including

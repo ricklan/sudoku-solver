@@ -1,5 +1,5 @@
 import "../css/App.css";
-import { SudokuBoard } from "./SudokuBoard";
+import { SudokuBoard } from "./SudokuBoard/SudokuBoard";
 import { BoardUse } from "./BoardUse";
 import { Header } from "./Header/Header";
 
