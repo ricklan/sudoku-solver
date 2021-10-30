@@ -7,8 +7,10 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <SudokuBoard />
-      <BoardUse />
+      <div id="board-and-rules">
+        <SudokuBoard />
+        <BoardUse />
+      </div>
     </div>
   );
 }
