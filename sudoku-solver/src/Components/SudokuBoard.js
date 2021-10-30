@@ -106,7 +106,6 @@ export function SudokuBoard() {
    * @param {Event} e - The Event that triggers this function.
    */
   const processKeyDown = (e) => {
-    e.preventDefault();
     let curCellTag = e.target;
     let row = parseInt(curCellTag.id.substring(1, 2));
     let col = parseInt(curCellTag.id.substring(3, 4));
@@ -133,6 +132,7 @@ export function SudokuBoard() {
       e.key === "ArrowLeft" ||
       e.key === "ArrowRight"
     ) {
+      e.preventDefault();
       processArrowKey(e, curSelCell);
     }
   };
