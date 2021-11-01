@@ -362,7 +362,7 @@ export function SudokuBoard() {
 
   return (
     <>
-      <h2>Enter values into the board and hit submit to solve!</h2>
+      <h2 id="prompt">Enter values into the board and hit submit to solve!</h2>
       <ul id="sudoku-board">
         {board.map((row, x) => {
           return row.map((cell, y) => {
