@@ -110,9 +110,9 @@ export function SudokuBoard() {
     let row = parseInt(curCellTag.id.substring(1, 2));
     let col = parseInt(curCellTag.id.substring(3, 4));
     let curSelCell = findSelected();
-    if ((e.key >= "0" && e.key <= "9") || e.key === "Delete") {
+    if ((e.key >= "1" && e.key <= "9") || e.key === "Delete") {
       let curCell = board[row][col];
-      if (e.key === "0" || e.key === "Delete") {
+      if (e.key === "Delete") {
         curCell.setValue("");
         curCell.setUserEntered(false);
         curCellTag.classList.remove("cell-user-entered");
