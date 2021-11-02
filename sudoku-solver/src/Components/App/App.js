@@ -1,6 +1,6 @@
 import "./App.css";
 import { SudokuBoard } from "../SudokuBoard/SudokuBoard";
-import { BoardUse } from "../BoardUse";
+import { BoardUse } from "../BoardUse/BoardUse";
 import { Header } from "../Header/Header";
 
 function App() {
