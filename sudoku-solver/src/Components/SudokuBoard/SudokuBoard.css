@@ -156,8 +156,11 @@ button:active {
   gap: 1px;
   grid-row: 2/4;
   grid-column: 1/2;
-  margin-right: 50px;
+  padding-right: 35px;
   margin-left: auto;
+  margin-right: 35px;
+  border-right: dashed black;
+  border-width: 2px;
 }
 
 #grid {
