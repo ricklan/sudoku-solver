@@ -368,7 +368,7 @@ export function SudokuBoard() {
           return row.map((cell, y) => {
             return (
               <li
-                className="cell"
+                className={`cell row${x} col${y}`}
                 id={`c${x}-${y}`}
                 key={`${x}-${y}`}
                 onKeyDown={(e) => processKeyDown(e)}
