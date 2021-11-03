@@ -345,6 +345,7 @@ export function SudokuBoard() {
         cell.setDupRow(false);
         cell.setDupSquare(false);
         cell.getTag().classList.remove("cell-highlight-error");
+        cell.getTag().classList.remove("cell-user-entered");
       });
     });
   };
