@@ -66,8 +66,8 @@ export function SudokuBoard() {
   const displayAnswer = (answerArray) => {
     board.forEach((row, x) => {
       row.forEach((cell, y) => {
-        cell.getTag().innerHTML = answerArray[x][y];
-        cell.setValue(answerArray[x][y]);
+        cell.getTag().innerHTML = "" + answerArray[x][y];
+        cell.setValue("" + answerArray[x][y]);
       });
     });
   };
@@ -348,6 +348,7 @@ export function SudokuBoard() {
         cell.getTag().classList.remove("cell-user-entered");
       });
     });
+    document.querySelector("#error-message").innerHTML = "";
   };
 
   /**
