@@ -382,8 +382,10 @@ export function SudokuBoard() {
         })}
       </ul>
       <div id="board-menu">
-        <button onClick={(e) => processBoard(e)}>Submit</button>
-        <button onClick={() => clearBoard()}>Clear</button>
+        <div id="menu-buttons">
+          <button onClick={(e) => processBoard(e)}>Submit</button>
+          <button onClick={() => clearBoard()}>Clear</button>
+        </div>
         <p id="error-message"></p>
       </div>
     </>

@@ -168,6 +168,11 @@ button:active {
   grid-column: 1/10;
 }
 
+#error-message {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 /*Responsive*/
 @media (max-width: 1112px) {
   #board-menu {
@@ -177,8 +182,14 @@ button:active {
 }
 
 @media (max-width: 930px) {
+  #menu-buttons {
+    text-align: right;
+    grid-row: 1;
+  }
+
   #board-menu {
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
   }
 
   #sudoku-board {
@@ -188,6 +199,11 @@ button:active {
     padding-right: 0;
     border-right: none;
     width: 368px;
+  }
+
+  #error-message {
+    text-align: left;
+    grid-row: 1;
   }
 }
 
@@ -236,6 +252,21 @@ button:active {
   .col8 {
     border-right: 3px solid;
     width: 28px;
+  }
+
+  #board-menu {
+    grid-template-columns: none;
+    grid-template-rows: 2fr 1.5fr;
+    margin-bottom: 10px;
+  }
+
+  #menu-buttons {
+    text-align: center;
+  }
+
+  #error-message {
+    grid-row: 2;
+    text-align: center;
   }
 
   #sudoku-board {
