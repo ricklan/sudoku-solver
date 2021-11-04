@@ -195,10 +195,7 @@ button:active {
   .cell {
     width: 30px;
     height: 30px;
-    border: 1px solid;
-    font-family: "Kalam", cursive;
-    font-size: 1.7em;
-    text-align: center;
+    font-size: 1.4em;
   }
 
   .row0 {
@@ -253,10 +250,7 @@ button:active {
   .cell {
     width: 20px;
     height: 20px;
-    border: 1px solid;
-    font-family: "Kalam", cursive;
-    font-size: 1.7em;
-    text-align: center;
+    font-size: 0.9em;
   }
 
   .row0 {
