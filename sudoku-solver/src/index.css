@@ -16,3 +16,16 @@ ol {
   font-family: "Klee One", sans-serif;
   font-weight: 600;
 }
+
+/*Responsive*/
+@media (max-width: 414px) {
+  h2 {
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 320px) {
+  h2 {
+    font-size: 1.1em;
+  }
+}

@@ -39,3 +39,19 @@ ol {
 #input {
   margin-bottom: 42px;
 }
+
+/*Responsive*/
+@media (max-width: 930px) {
+  #board-use {
+    text-align: center;
+    border-top: dashed black;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 556px) {
+  #input {
+    margin-bottom: 16px;
+    margin-top: 10px;
+  }
+}

@@ -167,3 +167,142 @@ button:active {
   grid-row: 1/10;
   grid-column: 1/10;
 }
+
+/*Responsive*/
+@media (max-width: 1112px) {
+  #board-menu {
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 930px) {
+  #board-menu {
+    justify-content: center;
+  }
+
+  #sudoku-board {
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 35px;
+    padding-right: 0;
+    border-right: none;
+    width: 368px;
+  }
+}
+
+@media (max-width: 414px) {
+  .cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid;
+    font-family: "Kalam", cursive;
+    font-size: 1.7em;
+    text-align: center;
+  }
+
+  .row0 {
+    border-top: 3px solid;
+    height: 28px;
+  }
+
+  .row2 {
+    border-bottom: 3px solid;
+    height: 28px;
+  }
+
+  .row5 {
+    border-bottom: 3px solid;
+    height: 28px;
+  }
+
+  .row8 {
+    border-bottom: 3px solid;
+    height: 28px;
+  }
+
+  .col0 {
+    border-left: 3px solid;
+    width: 28px;
+  }
+
+  .col3 {
+    border-left: 3px solid;
+    width: 28px;
+  }
+
+  .col6 {
+    border-left: 3px solid;
+    width: 28px;
+  }
+
+  .col8 {
+    border-right: 3px solid;
+    width: 28px;
+  }
+
+  #sudoku-board {
+    grid-template-columns: repeat(9, 30px);
+    grid-template-rows: repeat(9, 30px);
+    margin-right: auto;
+    width: 278px;
+  }
+}
+
+@media (max-width: 320px) {
+  .cell {
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    font-family: "Kalam", cursive;
+    font-size: 1.7em;
+    text-align: center;
+  }
+
+  .row0 {
+    border-top: 3px solid;
+    height: 18px;
+  }
+
+  .row2 {
+    border-bottom: 3px solid;
+    height: 18px;
+  }
+
+  .row5 {
+    border-bottom: 3px solid;
+    height: 18px;
+  }
+
+  .row8 {
+    border-bottom: 3px solid;
+    height: 18px;
+  }
+
+  .col0 {
+    border-left: 3px solid;
+    width: 18px;
+  }
+
+  .col3 {
+    border-left: 3px solid;
+    width: 18px;
+  }
+
+  .col6 {
+    border-left: 3px solid;
+    width: 18px;
+  }
+
+  .col8 {
+    border-right: 3px solid;
+    width: 18px;
+  }
+
+  #sudoku-board {
+    grid-template-columns: repeat(9, 20px);
+    grid-template-rows: repeat(9, 20px);
+    margin-right: auto;
+    width: 188px;
+  }
+}
