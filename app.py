@@ -91,7 +91,7 @@ def checkValidPuzzle(puzzle):
     '''
     This function checks if the given puzzle is valid or not
     '''
-
+    print(puzzle)
     # If the puzzle isn't a 9 by 9 array, return False
     if(not(type(puzzle) is list and len(puzzle) == 9 and len(puzzle[0]) == 9)):
         return False
@@ -113,7 +113,7 @@ def checkValidPuzzle(puzzle):
                 # Checks if the same number is already in the same row, column and square
                 if(cell in rows[i] or cell in cols[j] or cell in squares[square]):
                     return False
-
+                
                 # Adds the cell value to the hashmaps
                 rows[i].append(cell)
                 cols[j].append(cell)
