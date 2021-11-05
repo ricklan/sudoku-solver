@@ -178,10 +178,6 @@ def _corsify_actual_response(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
-@app.route('/')
-def home():
-    return "<h1> Welcome to online sudoku solver </h1>"
-
 if (__name__ == "__main__"):
     app.secret_key = b"secretkey"
     app.run(debug = True)
