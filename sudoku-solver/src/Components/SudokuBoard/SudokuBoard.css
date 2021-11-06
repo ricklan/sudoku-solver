@@ -171,6 +171,7 @@ button:active {
 #error-message {
   margin-top: auto;
   margin-bottom: auto;
+  font-family: "Klee One", cursive;
 }
 
 /*Responsive*/

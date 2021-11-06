@@ -1,5 +1,6 @@
 import "./SudokuBoard.css";
 import Cell from "../../classes/Cell";
+require("dotenv").config();
 
 /**
  * Returns a React element that represents the sudoku board puzzle, including
@@ -26,7 +27,9 @@ export function SudokuBoard() {
     let boardArray = convertToArray();
     const axios = require("axios");
     axios
-      .post("http://127.0.0.1:5000/api/solvePuzzle", { puzzle: boardArray })
+      .post(process.env.REACT_APP_URL + "/api/solvePuzzle", {
+        puzzle: boardArray,
+      })
       .then(function (response) {
         displayAnswer(response.data);
         document.querySelector("#error-message").innerHTML = "";
