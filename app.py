@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, make_response, jsonify
+from flask_cors import CORS, cross_origin
 import json
 
 
@@ -147,28 +148,35 @@ def getSquare(row, col):
             return 8
     
 
-@app.route('/api/solvePuzzle', methods=["POST"])
+@app.route("/api/solvePuzzle", methods=['POST', 'OPTIONS'])
 def solveSudoku():
     '''
     This is an API that returns a solved sudoku puzzle or an error message if the puzzle can't be solved
     '''
-
-    # Gets the inputted puzzle
-    puzzle = request.json["puzzle"]
-
-    # Checks if the puzzle is valid or not
-    if(checkValidPuzzle(puzzle)):
-        result = solve_sudoku(puzzle)
-        if(result):
-            return json.dumps(solve_sudoku(puzzle)), 200
-        else:
-            return "Puzzle not solvable", 400
+    if request.method == "OPTIONS":
+        return _build_cors_preflight_response()
     else:
-        return "Invalid Puzzle", 400
+        # Gets the inputted puzzle
+        puzzle = request.json["puzzle"]
+        # Checks if the puzzle is valid or not
+        if(checkValidPuzzle(puzzle)):
+            result = solve_sudoku(puzzle)
+            if(result):
+                return _corsify_actual_response(jsonify(solve_sudoku(puzzle))), 200
+            else:
+                return _corsify_actual_response(jsonify("Puzzle not solvable")), 400
+        else:
+            return _corsify_actual_response(jsonify("Invalid Puzzle")), 404
 
-@app.route('/')
-def home():
-    return "<h1> Welcome to online sudoku solver </h1>"
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    return response
+
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 if (__name__ == "__main__"):
     app.secret_key = b"secretkey"

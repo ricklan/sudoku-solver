@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300&family=Klee+One:wght@600&display=swap");
+
+body {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  font-family: "Klee One", sans-serif;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+p,
+ol {
+  font-family: "Klee One", sans-serif;
+  font-weight: 600;
+}
+
+/*Responsive*/
+@media (max-width: 414px) {
+  h2 {
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 320px) {
+  h2 {
+    font-size: 1.1em;
+  }
+}

@@ -1,0 +1,57 @@
+p {
+  margin-top: 0;
+}
+
+ol {
+  padding-inline-start: 20px;
+}
+
+.key {
+  padding-right: 15px;
+}
+
+.key-long {
+  width: 70px;
+}
+
+.key-arrow {
+  width: 100px;
+}
+
+.key-mouse {
+  width: 30px;
+}
+
+.key-nums {
+  width: 100px;
+}
+
+.key-group {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#board-use {
+  grid-row: 3;
+  grid-column: 2;
+}
+
+#input {
+  margin-bottom: 42px;
+}
+
+/*Responsive*/
+@media (max-width: 930px) {
+  #board-use {
+    text-align: center;
+    border-top: dashed black;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 556px) {
+  #input {
+    margin-bottom: 16px;
+    margin-top: 10px;
+  }
+}
