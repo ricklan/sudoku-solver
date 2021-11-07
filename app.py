@@ -1,9 +1,10 @@
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS, cross_origin
+from flask.helpers import send_from_directory
 import json
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='sudoku-solver/build', static_url_path='')
 
 def solve_sudoku(array):
     '''
@@ -167,6 +168,10 @@ def solveSudoku():
                 return _corsify_actual_response(jsonify("Puzzle not solvable")), 400
         else:
             return _corsify_actual_response(jsonify("Invalid Puzzle")), 404
+
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 def _build_cors_preflight_response():
     response = make_response()
