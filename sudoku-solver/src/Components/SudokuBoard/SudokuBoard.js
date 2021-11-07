@@ -23,13 +23,11 @@ export function SudokuBoard() {
    */
   //https://online-sudoku-solver.herokuapp.com/api/solvePuzzle
   const processBoard = (e) => {
-    console.log(1);
     e.preventDefault();
     let boardArray = convertToArray();
     const axios = require("axios");
-    console.log(process.env.REACT_APP_URL + "/api/solvePuzzle");
     axios
-      .post(process.env.REACT_APP_URL + "/api/solvePuzzle", {
+      .post(`${process.env.REACT_APP_URL}/api/solvePuzzle`, {
         puzzle: boardArray,
       })
       .then(function (response) {
