@@ -15,7 +15,7 @@ export function SudokuBoard() {
     });
   });
 
-  console.log(process.env.URL);
+  console.log(process.env.REACT_APP_URL);
   /**
    * Processes the input from the sudoku board puzzle and makes an api call to
    * the backend to solve the puzzle. If the puzzle has a solution it will be
