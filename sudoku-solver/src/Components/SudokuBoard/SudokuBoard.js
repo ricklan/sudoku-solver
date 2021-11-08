@@ -27,7 +27,7 @@ export function SudokuBoard() {
     let boardArray = convertToArray();
     const axios = require("axios");
     axios
-      .post(`${process.env.REACT_APP_URL}/api/solvePuzzle`, {
+      .post(`${process.env.URL}/api/solvePuzzle`, {
         puzzle: boardArray,
       })
       .then(function (response) {
