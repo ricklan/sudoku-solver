@@ -112,7 +112,7 @@ def checkValidPuzzle(puzzle):
                 square = getSquare(i, j)
 
                 # Checks if the value is a number between 0-9
-                if (type(cell) != int or cell <= 0 or cell >= 9):
+                if (type(cell) != int or cell < 0 or cell > 9):
                     return False
 
                 # Checks if the same number is already in the same row, column and square
