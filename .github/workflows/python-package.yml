@@ -24,6 +24,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Python run
+        uses: sudoku-solver/github-action@v2
         with:
           start: python3 app.py
       - name: Install dependencies
