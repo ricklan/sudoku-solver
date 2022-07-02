@@ -22,5 +22,5 @@ jobs:
         pip install -r requirements.txt
     - name: Running the test cases
       run: |
-        python3 app.py
-        python3 -m pytest
+        python3 app.py && python3 -m pytest
+        lsof -i:5000 -t
