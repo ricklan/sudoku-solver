@@ -22,4 +22,5 @@ jobs:
         pip install -r requirements.txt
     - name: Running the test cases
       run: |
+        python3 app.py
         python3 -m pytest
